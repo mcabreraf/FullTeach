@@ -21,7 +21,7 @@ import * as firebase from 'firebase';
 
 
 export default class Login extends React.Component {
-
+  
   constructor(props){
     super(props);
     this.state = {
@@ -55,20 +55,21 @@ export default class Login extends React.Component {
 
         <View style = {styles.logoContainer}>
           <Image style = {styles.logo}
-            //source={{uri: 'http://www.artisticquiltdesign.com/wp-content/uploads/png-logos-logo-creator-png-png-logo-design-transparent-png-images-pluspng.png'}}
             source={require('../img/FULLTEACH.jpg')}
             />
         </View>
 
           <Text style ={styles.header}> FULLTEACH </Text>
           <TextInput
+            
             style = {styles.textInput}
             placeholder='Email'
             onChangeText = { (email) => this.setState({email}) }
             underlineColorAndroid='transparent'
           />
 
-          <TextInput
+          <TextInput 
+          
             style = {styles.textInput}
             secureTextEntry={true}
             placeholder='Password'
@@ -88,7 +89,7 @@ export default class Login extends React.Component {
 
           <TouchableOpacity
             style = {styles.registerbtn}
-            onPress={() => this.props.navigation.navigate('Register')} >
+            onPress={() => this.props.navigation.navigate('Registro')} >
             <Text> SIGN UP </Text>
 
           </TouchableOpacity>
@@ -107,9 +108,9 @@ export default class Login extends React.Component {
         this.setState({
           response:'user log in'
         })
-        setTimeout(() => {
+       
           this.props.navigation.navigate('Profile');
-        }, 1200);
+       
          
 
       }catch(error){
@@ -121,6 +122,7 @@ export default class Login extends React.Component {
       }
   }
 }
+
 
 
 
@@ -165,6 +167,7 @@ const styles = StyleSheet.create({
   },
   white: {
     color: 'white',
+    fontWeight: 'bold'
 
   },
   btn: {

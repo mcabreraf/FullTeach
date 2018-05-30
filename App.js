@@ -7,13 +7,16 @@ import Profile from './app/components/Profile';
 import Register from './app/components/Register';
 import Subjects from './app/components/Subjects';
 import Inbox from './app/components/Inbox';
+import ProfByMat from './app/components/ProfByMat';
+import Infoprof from './app/components/Infoprof';
+import Bprof from './app/components/Bprof';
 
 const Other = createBottomTabNavigator({
 
   Inbox: { screen: Inbox},
   Profile: { screen: Profile},
-  Subject: { screen: Subjects},
-
+  Subjects: { screen: Subjects},
+  
 },{
   initialRouteName: 'Profile',
   swipeEnabled: true,
@@ -27,9 +30,12 @@ const Other = createBottomTabNavigator({
 );
 
 const Home = createStackNavigator ({
-  Home: { screen: Login },
-  Register: { screen: Register },
-  Profile: { screen: Other }
+  Entrada: { screen: Login },
+  Registro: { screen: Register },
+  Profile: { screen: Other },
+  Profesores: { screen: ProfByMat},
+  InfoProfesores: { screen: Infoprof },
+  SerProfesor: { screen: Bprof }
 },
 {
   navigationOptions: {
@@ -41,7 +47,7 @@ const Home = createStackNavigator ({
 
 export default class App extends React.Component {
 
-
+    
     componentWillMount(){
       firebase.initializeApp({
       apiKey: 'AIzaSyAM3ZIHIiRKtwY0qOh0MCtSEWjD1Rg3ZEc',
@@ -54,6 +60,7 @@ export default class App extends React.Component {
     }
 
   render() {
+    console.ignoredYellowBox = ['Setting a timer'];
     return (
       <Home/>
 

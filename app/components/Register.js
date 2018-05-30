@@ -43,7 +43,7 @@ export default class Register extends Component {
       password: "",
       picture: "",
       error: "",
-      loading: false,
+      loading: "false",
       response: ""
     };
   }
@@ -121,9 +121,9 @@ export default class Register extends Component {
         this.writeUserData(this.state.name, this.state.email)
         alert('User Created');
 
-        setTimeout(() => {
+        
           this.props.navigation.goBack();
-        }, 1200);
+        
 
 
       })
@@ -140,7 +140,7 @@ export default class Register extends Component {
     firebase.database().ref('Users/'+user.uid).set({
       Name: name,
       Email: email,
-      Professor: false,
+      Professor: "false",
     });
   };
 

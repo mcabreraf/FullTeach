@@ -29,11 +29,9 @@ import Helpers from './Helpers';
 
 export default class Profile extends React.Component {
   static navigationOptions = {
-    header: false,
+    
     title: 'Profile',
-    headerStyle: {
-      backgroundColor: '#0a4e87',
-    },
+    
     tabBarIcon: ({ tintColor }) => {
       return <Icon name='ios-person' style={{ color: tintColor }} />
     }
@@ -43,7 +41,14 @@ export default class Profile extends React.Component {
     super(props)
     this.state = {
       userName: '',
-      Professor: ''
+      Professor: '',
+      emailprof: '',
+      hor1prof: '',
+      hor2prof: '',
+      desprof: '',
+      precioprof: '',
+      mat1prof:'',
+      mat2prof:''
     }
   }
 
@@ -59,6 +64,41 @@ export default class Profile extends React.Component {
           Professor: namep  
         })
       })
+      Helpers.getEmailProf(Firebase.getUid(),(item2)=>{
+        this.setState({
+            emailprof: item2
+        })
+      })
+      Helpers.getHor1Prof(Firebase.getUid(),(item3)=>{
+        this.setState({
+            hor1prof: item3
+        })
+      })
+      Helpers.getHor2Prof(Firebase.getUid(),(item4)=>{
+        this.setState({
+            hor2prof: item4
+        })
+      })
+      Helpers.getDesProf(Firebase.getUid(),(item5)=>{
+        this.setState({
+            desprof: item5
+        })
+      })
+      Helpers.getPrecioProf(Firebase.getUid(),(item6)=>{
+        this.setState({
+            precioprof: item6
+        })
+      })
+      Helpers.getMat1Prof(Firebase.getUid(),(item7)=>{
+        this.setState({
+            mat1prof: item7
+        })
+      })
+      Helpers.getMat2Prof(Firebase.getUid(),(item8)=>{
+        this.setState({
+            mat2prof: item8
+        })
+      })
     }catch(error){
       console.log(error)
     }
@@ -71,13 +111,13 @@ export default class Profile extends React.Component {
   render() {
     if(this.state.Professor=='true'){
       return (
-        <Container style={{backgroundColor:'#fff'}}>
+        <Container style={{backgroundColor:'#f8f8f8'}}>
         <Header style={{backgroundColor:'#0a4e87'}}></Header>
         <Content>
-          <Card style={{flex: 0}}>
+          <Card style={{flex: 0, borderColor: '#0a4e87', borderWidth: 2}}>
             <CardItem>
               <Left>
-                <Thumbnail source={{uri: 'https://orig00.deviantart.net/5d63/f/2018/026/a/3/jordi_enp_el_nino_polla_by_tkrfx-dc18jjk.jpg'}} />
+                <Thumbnail/>
                 <Body>
                   <Text style={{fontWeight:'bold'}}>{this.state.userName}</Text>
                   <Text note>{f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear()}</Text>
@@ -86,23 +126,39 @@ export default class Profile extends React.Component {
             </CardItem>
             <CardItem>
               <Body>
-                <Image source={{uri: 'https://www.moreloshabla.com/wp-content/uploads/2018/02/long-1-776x343.jpg'}} style={{height: 200, width: 370, flex: 1}}/>
+              <View style = {styles.logoContainer}>
+                <Image style = {styles.logo} source={require('../img/FULLTEACH.jpg')}/>
+              </View>
                 <Text style={{fontWeight:'bold'}}> Informacion: </Text>
-                <Text>
-                Manuel "El Niño Polla", también conocido como Manuel ENP o Mañe, es un actor porno español.​ Actualmente trabaja para Brazzers, ​ una productora pornográfica. En noviembre de 2016, fue nominado para "Mejor novato masculino" en los Premios AVN.
-                </Text>
+                <Text> {this.state.desprof} </Text>
+                
+                <Text style={{fontWeight:'bold'}}> Correo: </Text>
+                <Text> {this.state.emailprof} </Text>
+                
+                <Text style={{fontWeight:'bold'}}> Es profesor de: </Text>
+                <Text> {this.state.mat1prof} </Text>
+                <Text> {this.state.mat2prof} </Text>
+                
+                <Text style={{fontWeight:'bold'}}> Sus horarios son: </Text>
+                <Text> {this.state.hor1prof} </Text>
+                <Text> {this.state.hor2prof} </Text>
+                
+                <Text style={{fontWeight:'bold'}}> El precio de su hora: </Text>
+                <Text> ${this.state.precioprof} </Text>
               </Body>
             </CardItem>
             <CardItem>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Icon name="logo-github" />
-                  <Text>1,926 stars</Text>
-                </Button>
-              </Left>
+
+                <Text style={styles.note}>*Para realizar algun cambio, comunicarse a: admfullteach@gmail.com</Text>
+              
             </CardItem>
           </Card>
+          
         </Content>
+        <TouchableOpacity style={styles.btn} onPress={this.logout}>    
+          <Text style={styles.white}>SIGN OUT</Text>
+        </TouchableOpacity>
+        <Text> {''} </Text>
       </Container>
         
 
@@ -110,18 +166,43 @@ export default class Profile extends React.Component {
     }else{
       return (
 
-        <View style ={styles.container}>
-          <Text> {this.state.userName} </Text>
-          <Text> {this.state.Professor} </Text>
+        <Container style={{backgroundColor:'#f8f8f8'}}>
+        <Header style={{backgroundColor:'#0a4e87'}}></Header>
+        <Content>
+          <Card style={{flex: 0, borderColor: '#0a4e87', borderWidth: 2}}>
+            <CardItem>
+              <Left>
+                <Thumbnail/>
+                <Body>
+                  <Text style={{fontWeight:'bold'}}>{this.state.userName}</Text>
+                  <Text note>{f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear()}</Text>
+                </Body>
+              </Left>
+            </CardItem>
+            <CardItem>
+              <Body>
+              <View style = {styles.logoContainer}>
+              <Image style = {styles.logo} source={require('../img/FULLTEACH.jpg')}/>
+              </View>
+                <Text style={{fontWeight:'bold'}}> Informacion: </Text>
+                <Text>
+                  Todavia no posees informacion a mostrar, ¿que esperas para ser profesor y dar a conocer tu conocimiento a todos? ¡Unete ya! Podras atender todo tipo de estudiantes en las materias donde demuestres un gran dominio.
+                </Text>
+              </Body>
+            </CardItem>
+            <CardItem style={{paddingLeft:100}}>
+             <TouchableOpacity style={styles.registerbtn} onPress={this.bprofe}>    
+                <Text style={styles.blue}>¡CONVIERTETE EN PROFESOR!</Text>
+              </TouchableOpacity>
+            </CardItem>
+          </Card>
           
-          <Text style ={styles.text}>- AREA DE MIEMBROS (EN DESARROLLO) -</Text>
-
-          <TouchableOpacity
-          style = {styles.registerbtn}
-            onPress={this.logout}>
-            <Text> SIGN OUT</Text>
-          </TouchableOpacity>
-        </View>
+        </Content>
+        <TouchableOpacity style={styles.btn} onPress={this.logout}>    
+          <Text style={styles.white}>SIGN OUT</Text>
+        </TouchableOpacity>
+        <Text> {''} </Text>
+      </Container>
 
     );
     } 
@@ -133,9 +214,9 @@ export default class Profile extends React.Component {
         this.setState({
           response:'user log out'
         })
-        setTimeout(() => {
-          this.props.navigation.navigate('Login');
-        }, 1200);
+        
+          this.props.navigation.navigate('Entrada');
+        
 
 
       }catch(error){
@@ -147,7 +228,13 @@ export default class Profile extends React.Component {
       }
   }
 
+  bprofe = () => {
+    this.props.navigation.navigate('SerProfesor');
+  }
+
 }
+
+  
 
 
 
@@ -166,6 +253,40 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
     padding:10,
     alignItems: 'center',
+
+  },
+  note:{
+    fontSize: 10,
+    color: '#0a4e87'
+  },
+  white: {
+    color: 'white',
+    fontWeight: 'bold'
+
+  },
+  blue: {
+    color: '#0a4e87',
+    fontWeight: 'bold'
+
+  },
+  btn: {
+    alignSelf: 'stretch',
+    backgroundColor:'#0a4e87',
+    padding:10,
+    alignItems: 'center',
+    paddingLeft: 30,
+    paddingRight: 30
+    
+  },
+  logoContainer:{
+    alignItems: 'center',
+    justifyContent:'center',
+    flexGrow: 0.4,
+    paddingLeft:120
+  },
+  logo: {
+    width:130,
+    height: 130,
 
   },
 });

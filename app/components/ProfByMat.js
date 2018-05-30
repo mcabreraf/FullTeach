@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, ListView, TouchableOpacity } from 'react-native';
-import Firebase from './firebase';
+import * as firebase from 'firebase';
 import Helpers from './Helpers';
-import ProfByMat from './ProfByMat';
 import {
   Text,
   Container,
@@ -18,7 +17,7 @@ import {
   InputGroup,
   List
 } from "native-base";
-export default class Subject extends React.Component {
+export default class ProfByMat extends React.Component {
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => {
       return <Icon name='ios-book-outline' style={{ color: tintColor }} />
@@ -30,14 +29,13 @@ export default class Subject extends React.Component {
       this.state = {
         mats: ds
       }
-
-      this.itemsRef = this.getRef().child('Materia');
+      var {params} = this.props.navigation.state;
+      var profpath = "/Materia/"+params.it+"/Profesores"
+      this.itemsRef = firebase.database().ref(profpath);
       this.renderRow = this.renderRow.bind(this);
       this.pressRow = this.pressRow.bind(this);
   }
-  getRef(){
-    return Firebase.getRef();
-  }
+  
   getItems(itemsRef){
     itemsRef.on('value',(snap)=> {
       let items = [];
@@ -45,6 +43,7 @@ export default class Subject extends React.Component {
         items.push({
           title: child.val().name,
           _key: child.key
+          
         })
       });
       this.setState({
@@ -63,30 +62,35 @@ export default class Subject extends React.Component {
     console.log(item);
   }
   renderRow(item){
-    var {navigate} = this.props.navigation;
+      var {params} = this.props.navigation.state;
+      var {navigate} = this.props.navigation;
     return(
-      <TouchableOpacity onPress={()=>navigate('Profesores',{name:item.title, it:item._key})}>
+      <TouchableOpacity onPress={()=>navigate('InfoProfesores',{name:item.title, it:item._key})}>
         <View style={styles.li}>
           <Text style={styles.liText}>{item.title}</Text>
           </View>
         </TouchableOpacity>
     );
   }
-  
-  
+  regresar= () => {
+    this.props.navigation.goBack()
+  }
   render() {
-    
     const {mats} = this.state;
+    var {params} = this.props.navigation.state;
     return (
       <Container style={{backgroundColor:'#f8f8f8'}}>
-      <Header style = {{backgroundColor:'#0a4e87'}}></Header>
-      <View style = {styles.container}>
-        <Text style = {styles.header}> MATERIAS DISPONIBLES </Text>
+      <Header style={{backgroundColor:'#0a4e87'}}></Header>
+      <View style ={styles.container}>
+        <Text style ={styles.header}> PROFESORES DISPONIBLES: {params.name} </Text>
       </View>
-      <View style = {styles.container2}>
+      <View style ={styles.container2}>
       <ListView dataSource={this.state.mats} renderRow={this.renderRow}/> 
       </View>
-      
+        <TouchableOpacity style={styles.btn} onPress={this.regresar}>    
+          <Text style={styles.white}>REGRESAR</Text>
+        </TouchableOpacity>
+        <Text> {''} </Text>
       </Container>
     );
   }
@@ -153,6 +157,7 @@ const styles = StyleSheet.create({
   },
   white: {
     color: 'white',
+    fontWeight: 'bold'
   },
   btn: {
     alignSelf: 'stretch',
